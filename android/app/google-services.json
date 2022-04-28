@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "703981557009",
+    "project_id": "dating-8c896",
+    "storage_bucket": "dating-8c896.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:703981557009:android:993ace70c0a10a0e65a8b0",
+        "android_client_info": {
+          "package_name": "com.dating"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "703981557009-ob7no3rhd4u7jd14304d4k68teug3q6v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXvU0rFvfTrmna4VvAHjpMZiCrmhkvSI8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "703981557009-ob7no3rhd4u7jd14304d4k68teug3q6v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
