@@ -1,5 +1,10 @@
 import React from 'react';
-//   import styles from "./IntroPageStyle"
+import {
+  Text,
+  View,
+  SafeAreaView,
+  Image,
+} from 'react-native';
 import {ScaledSheet} from 'react-native-size-matters';
 import Button from '../../component/Button';
 import Buttons from '../../component/Buttons';
@@ -45,7 +50,7 @@ const styles = ScaledSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
     color: 'black',
-    marginTop:20,
+    marginTop:'20@vs',
   },
   overview: {
     ...FONTS.h4,
@@ -56,8 +61,8 @@ const styles = ScaledSheet.create({
   Button: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
-    marginTop:20,
-    marginBottom:35
+    marginTop:'20@vs',
+    marginBottom:'35@s'
   },
 });
 

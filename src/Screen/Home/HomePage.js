@@ -1,5 +1,5 @@
-import {View, FlatList, Image, Text, Alert} from 'react-native';
 import React, {useState, useEffect} from 'react';
+import {View, FlatList, Image, Text, Alert} from 'react-native';
 import {ScaledSheet} from 'react-native-size-matters';
 import {COLORS, FONTS, strings} from '../../constants';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -221,24 +221,24 @@ const styles = ScaledSheet.create({
     textAlign: 'center',
   },
   user: {
-    fontSize: 20,
-    marginLeft: 30,
+    ...FONTS.body4,
+    marginLeft:'30@vs',
     color: COLORS.textColor,
     marginTop: 5,
   },
   image: {
-    height: 200,
-    width: 400,
-    marginBottom: 50,
+    height:'200@vs',
+    width:'400@s',
+    marginBottom:'50@s',
     alignSelf: 'center',
   },
   main_view: {
     backgroundColor: COLORS.primaryColor,
-    margin: 20,
-    borderRadius: 20,
+    margin:'20@msr',
+    borderRadius:'20@msr',
   },
   icon: {
     flexDirection: 'row',
-    marginLeft: 30,
+    marginLeft:'30@s',
   },
 });

@@ -16,33 +16,6 @@ const Login = ({navigation}) => {
   
   const { login } = useContext(AuthContext);
 
-  const Validate = () => {
-    if (mail === '') {
-      alert('Please fill the E-Mail Id');
-    } else if (pass === '') {
-      alert('Please fill the Password');
-    } else {
-      
-      auth()
-        .signInWithEmailAndPassword(mail, pass)
-
-        .then(() => {
-          console.log('User account created & signed in!');
-          
-        })
-        .catch(error => {
-          if (error.code === 'auth/email-already-in-use') {
-            Alert.alert('That email address is already in use!');
-          }
-
-          if (error.code === 'auth/invalid-email') {
-            Alert.alert('That email address is invalid!');
-          }
-
-          console.error(error);
-        });
-    }
-  };
   return (
     <KeyboardAwareScrollView style={styles.container_view}>
       <Text style={styles.head}>Welcome Back!</Text>
@@ -88,30 +61,30 @@ const styles = ScaledSheet.create({
     ...FONTS.h1,
     color: COLORS.textColor,
     fontWeight: 'bold',
-    paddingLeft: 25,
-    marginTop: 30,
-    marginBottom: 20,
+    paddingLeft: '25@s',
+    marginTop: '30@vs',
+    marginBottom: '20@s',
   },
   container: {
     backgroundColor: COLORS.primaryColor,
-    margin: 20,
-    borderRadius: 25,
-    paddingBottom: 100,
+    margin:'20@msr',
+    borderRadius: '25@msr',
+    paddingBottom:'90@s',
   },
   textinput: {
-    margin: 20,
+    margin:'20@msr',
     backgroundColor: COLORS.primaryColor,
   },
   button: {
     alignSelf: 'center',
-    marginTop: 70,
+    marginTop:'70@vs',
   },
   login: {
     margin: 10,
   },
   login_text: {
     alignSelf: 'center',
-    marginTop: 15,
+    marginTop:'15@vs',
     ...FONTS.h4,
     fontWeight: 'bold',
     color: COLORS.secondaryColor,

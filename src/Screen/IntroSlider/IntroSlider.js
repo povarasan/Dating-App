@@ -47,6 +47,7 @@ const IntroSlider = ({navigation}) => {
       // renderNextButton={RenderNextButton}
       renderDoneButton={RenderDoneButton}
       showSkipButton={false}
+      showNextButton={false}
       dotStyle={{backgroundColor: 'white', marginBottom: 250}}
       activeDotStyle={{backgroundColor: 'white', marginBottom: 250}}
     />

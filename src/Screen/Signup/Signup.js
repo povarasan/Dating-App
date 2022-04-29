@@ -1,4 +1,9 @@
 import React, { useContext } from 'react';
+import {
+  Text,
+  View,
+  TouchableOpacity
+} from 'react-native';
 import {TextInput} from 'react-native-paper';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {COLORS, FONTS, strings} from '../../constants';
@@ -6,11 +11,7 @@ import {ScaledSheet} from 'react-native-size-matters';
 import Button from '../../component/Button';
 import {Checkbox} from 'react-native-paper';
 import auth from '@react-native-firebase/auth';
-import {
-  Text,
-  View,
-  TouchableOpacity
-} from 'react-native';
+
 import { AuthContext } from '../../Router/AuthProvider'
 
 
@@ -22,37 +23,6 @@ const Signup = ({navigation}) => {
   const [checked, setChecked] = React.useState(false);
   
   const { register } = useContext(AuthContext);
-  
-  const Validate = () => {
-    if (name === "") {
-      alert('Please fill the Username')
-    }
-    else if (mail === "") {
-      alert('Please fill the E-Mail Id')
-    }
-    else if (pass === "") {
-      alert('Please fill the Password')
-    }
-    else {
-      auth()
-        .createUserWithEmailAndPassword(mail, pass)
-        .then(() => {
-          console.log('User account created & signed in!');
-          navigation.navigate('HomePage');
-        })
-        .catch(error => {
-          if (error.code === 'auth/email-already-in-use') {
-            console.log('That email address is already in use!');
-          }
-
-          if (error.code === 'auth/invalid-email') {
-            console.log('That email address is invalid!');
-          }
-
-          console.error(error);
-        });
-    }
-  }
 
   return (
     <KeyboardAwareScrollView style={styles.container_view}>
@@ -112,48 +82,48 @@ const styles = ScaledSheet.create({
     ...FONTS.h1,
     color: COLORS.textColor,
     fontWeight: 'bold',
-    paddingLeft: 25,
-    marginTop: 30,
-    marginBottom:10,
+    paddingLeft: '25@s',
+    marginTop:'30@vs',
+    marginBottom:'10@s',
   },
   caption:{
     ...FONTS.h3,
-    marginLeft:25
+    marginLeft:'25@s'
   },
   container: {
     backgroundColor: COLORS.primaryColor,
-    margin: 20,
-    borderRadius: 25,
-    paddingBottom:50,
+    margin:'20@msr',
+    borderRadius:'25@msr',
+    paddingBottom:'50@s',
   },
   textinput: {
-    margin: 20,
+    margin:'20@msr',
     backgroundColor: COLORS.primaryColor,
   },
   button: {
     alignSelf: 'center',
-    marginTop: 10,
+    marginTop:'10@vs',
   },
   login: {
-    margin: 10,
+    margin:'10@msr',
   },
   conditions:{
     flexDirection:"row",
-    paddingLeft:15,
-    marginTop:20
+    paddingLeft:'15@s',
+    marginTop:'20@vs'
   },
   condition:{
-    marginTop:7
+    marginTop:'7@vs'
   },
   login_text:{
     alignSelf:"center",
-    marginTop:15,
+    marginTop:'15@vs',
     ...FONTS.h4,
     fontWeight:'bold',
     color:COLORS.secondaryColor
   },
   agree_text:{
     alignSelf:"center",
-    marginTop:20
+    marginTop:'20@vs'
   }
 });
