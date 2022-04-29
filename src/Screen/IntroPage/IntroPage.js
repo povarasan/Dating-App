@@ -9,12 +9,6 @@ import {ScaledSheet} from 'react-native-size-matters';
 import Button from '../../component/Button';
 import Buttons from '../../component/Buttons';
 import {COLORS, FONTS, SIZES, strings} from '../../constants';
-import {
-  Text,
-  View,
-  SafeAreaView,
-  Image,
-} from 'react-native';
 
 const IntroPage = ({navigation}) => {
   return (

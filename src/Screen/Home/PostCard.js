@@ -16,7 +16,7 @@ import { COLORS, FONTS } from '../../constants';
 
 const PostCard = ({item, onDelete, onPress}) => {
   const {user, logout} = useContext(AuthContext);
-  
+  const [userData, setUserData] = useState(null);
 
   likeIcon = item.liked ? 'heart' : 'heart-outline';
   likeIconColor = item.liked ? '#2e64e5' : '#333';
