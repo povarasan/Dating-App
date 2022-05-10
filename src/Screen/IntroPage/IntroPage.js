@@ -14,13 +14,13 @@ const IntroPage = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
-        <Text style={styles.heading}>Title Comes Here</Text>
+        <Text style={styles.heading}>Dating App Here...</Text>
         <Text style={styles.overview}>
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry. Lorem Ipsum has been the industry's standard dummy text
           ever.
         </Text>
-        <View style={styles.Button}>
+        <View style={styles.buttons}>
           <Buttons text={strings.buttons.loginButton}  onClick={() => navigation.navigate('Login')} />
           <Button text={strings.buttons.signButton}    onClick={() => navigation.navigate('Signup')} />
         </View>
@@ -35,9 +35,10 @@ const styles = ScaledSheet.create({
   },
   content: {
     backgroundColor: 'white',
-    flex: 0.35,
-    position:"absolute",
-    bottom:0
+    flex: 0.4,
+     position:"absolute",
+     width:'100%',
+     bottom:0
   },
   heading: {
     ...FONTS.h3,
@@ -52,7 +53,7 @@ const styles = ScaledSheet.create({
     color: 'black',
     margin:15,
   },
-  Button: {
+  buttons: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     marginTop:'20@vs',

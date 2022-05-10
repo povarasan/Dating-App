@@ -6,39 +6,27 @@ import Signup from '../Screen/Signup/Signup';
 import IntroSlider from "../Screen/IntroSlider/IntroSlider"
 import IntroPage  from "../Screen/IntroPage/IntroPage"
 import Post from '../Screen/Home/HomePage';
-import Chat from '../Screen/Chat/Chat'
+import Chat from '../Screen/Chat/Chat';
+import Message from '../Screen/Chat/Message'
+
+
 const Stack = createNativeStackNavigator();
 
 const LoginStack = () => {
   return (
     <Stack.Navigator initialRouteName='IntroSlider'>
-      <Stack.Screen
-        name="IntroSlider"
-        component={IntroSlider}
-        options={{
-            headerShown: false,
-          }}
-        //options={{header: () => null}}
-      />
-      <Stack.Screen
-        name="Post"
-        component={Post}
-        options={{
-            headerShown: false,
-          }}
-        //options={{header: () => null}}
-      />
-      <Stack.Screen
-        name="Chat"
-        component={Chat}
-        options={{
-            headerShown: false,
-          }}
-        //options={{header: () => null}}
-      />
+     
       <Stack.Screen
         name="IntroPage"
         component={IntroPage}
+        options={{
+            headerShown: false,
+          }}
+        //options={{header: () => null}}
+      />
+       <Stack.Screen
+        name="IntroSlider"
+        component={IntroSlider}
         options={{
             headerShown: false,
           }}

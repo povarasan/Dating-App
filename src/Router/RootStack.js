@@ -9,9 +9,12 @@ import {COLORS, FONTS, SIZES} from '../constants';
 import DrawerStack from './DrawerStack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icons from 'react-native-vector-icons/Entypo';
-import CommonHeader from '../component/CommonHeader'
-import Chat from '../Screen/Chat/Chat'
+import CommonHeader from '../component/CommonHeader';
+import Chat from '../Screen/Chat/Chat';
 import Iconss from 'react-native-vector-icons/Entypo';
+import Message from '../Screen/Chat/Message';
+import Login from '../Screen/Login/Login';
+import IntroSlider from '../Screen/IntroSlider/IntroSlider';
 
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
@@ -20,15 +23,14 @@ const PostStack = createNativeStackNavigator();
 const ChatStack = createNativeStackNavigator();
 const MainStack = createNativeStackNavigator();
 
- export const RootStack = ({}) => {
+export const RootStack = ({}) => {
   return (
     <Tab.Navigator
-       initialRouteName="HomeScreen"
+      initialRouteName="HomeScreen"
       screenOptions={{
         tabBarStyle: styles.TabStyleBar,
         tabBarLabelStyle: styles.TabLabelStyle,
         tabBarHideOnKeyboard: true,
-        
       }}>
       <Tab.Screen
         name={'HomeScreen'}
@@ -42,7 +44,7 @@ const MainStack = createNativeStackNavigator();
               name="home"
               size={35}
               color={color}
-              style={{height: 50, width: 50, marginTop:30}}
+              style={{height: 50, width: 50, marginTop: 30}}
             />
           ),
         }}
@@ -59,7 +61,7 @@ const MainStack = createNativeStackNavigator();
               name="pluscircleo"
               size={35}
               color={color}
-              style={{height: 50, width: 50,marginTop:30}}
+              style={{height: 50, width: 50, marginTop: 30}}
             />
           ),
         }}
@@ -76,7 +78,7 @@ const MainStack = createNativeStackNavigator();
               name="chat"
               size={40}
               color={color}
-              style={{height: 50, width: 50,marginTop:30}}
+              style={{height: 50, width: 50, marginTop: 30}}
             />
           ),
         }}
@@ -84,7 +86,6 @@ const MainStack = createNativeStackNavigator();
     </Tab.Navigator>
   );
 };
-
 
 const DrawerScreens = ({navigation}) => {
   return (
@@ -106,21 +107,18 @@ const HomeScreen = ({navigation}) => {
       <HomeStack.Screen
         name={'Home'}
         component={HomePage}
-        options={
-          {
-            headerShown:true,
-            header: () => (
-              <CommonHeader
-                type={1}
-                onClick={() => navigation.openDrawer()}
-              />
-            ),
-          
-          }
-        }
-      />
+        options={{
+          headerShown: false,
+          // header: () => (
+          //   <CommonHeader
+          //     type={1}
+          //     onClick={() => navigation.openDrawer()}
 
-   </HomeStack.Navigator>
+          //   />
+          // ),
+        }}
+      />
+    </HomeStack.Navigator>
   );
 };
 
@@ -130,11 +128,9 @@ const PostStackScreen = ({navigation}) => {
       <PostStack.Screen
         name={'Post'}
         component={Post}
-        options={
-          {
-            headerShown:false,
-          }
-        }
+        options={{
+          headerShown: false,
+        }}
       />
     </PostStack.Navigator>
   );
@@ -146,11 +142,9 @@ const ChatStackScreen = ({navigation}) => {
       <ChatStack.Screen
         name={'Chat'}
         component={Chat}
-        options={
-          {
-            headerShown:false,
-          }
-        }
+        options={{
+          headerShown: false,
+        }}
       />
     </ChatStack.Navigator>
   );
@@ -166,20 +160,40 @@ const MainScreens = ({navigation}) => {
           headerShown: false,
         }}
       />
-    
+
+      <MainStack.Screen
+        name={'Message'}
+        component={Message}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      <MainStack.Screen
+        name={'HomePage'}
+        component={HomePage}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <MainStack.Screen
+        name={'Post'}
+        component={Post}
+        options={{
+          headerShown: false,
+        }}
+      />
     </MainStack.Navigator>
   );
 };
 
-
 const styles = ScaledSheet.create({
   TabLabelStyle: {
     fontSize: '11@s',
-    },
+  },
   TabStyleBar: {
     position: 'absolute',
     height: SIZES.height / 12,
   },
- 
 });
-export default  DrawerScreens;
+export default DrawerScreens;

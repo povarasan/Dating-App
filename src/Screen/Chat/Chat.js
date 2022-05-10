@@ -1,147 +1,164 @@
-import React from 'react';
+import React, {useState, useEffect, useContext, useId} from 'react';
 import {
-  Text,
   View,
-  TextInput,
-  TouchableOpacity,
-  Alert,
-  SafeAreaView,
+  Text,
   Image,
   FlatList,
+  StyleSheet,
+  TouchableOpacity,
+  ActivityIndicator
 } from 'react-native';
-import {ScaledSheet} from 'react-native-size-matters';
+import firestore from '@react-native-firebase/firestore';
+import {AuthContext} from '../../Router/AuthProvider';
+import Icons from 'react-native-vector-icons/AntDesign';
 import {COLORS, FONTS, strings} from '../../constants';
 
-const DATA = [
-  {
-    id: '1',
-    userName: 'Jenny Doe',
-    postTime: '4 mins ago',
-    post: 'Hey there, this is my test for a post of my social app in React Native.',
-    postImg: require('../../../assets/couple.png'),
-    liked: true,
-    likes: '14',
-    comments: '5',
-  },
-  {
-    id: '2',
-    userName: 'John Doe',
-    postTime: '2 hours ago',
-    post: 'Hey there, this is my test for a post of my social app in React Native.',
-    postImg: require('../../../assets/beach.png'),
-    likes: '8',
-    comments: '0',
-  },
-  {
-    id: '3',
-    userName: 'Ken William',
-    postTime: '1 hours ago',
-    post: 'Hey there, this is my test for a post of my social app in React Native.',
-    postImg: require('../../../assets/couples.png'),
-    liked: true,
-    likes: '1',
-    comments: '0',
-  },
-  {
-    id: '4',
-    userName: 'Neymar',
-    postTime: '4 mins ago',
-    post: 'Hey there, this is my test for a post of my social app in React Native.',
-    postImg: require('../../../assets/couple.png'),
-    liked: true,
-    likes: '14',
-    comments: '5',
-  },
-  {
-    id: '5',
-    userName: 'Danny',
-    postTime: '2 hours ago',
-    post: 'Hey there, this is my test for a post of my social app in React Native.',
-    postImg: require('../../../assets/beach.png'),
-    likes: '8',
-    comments: '0',
-  },
-  {
-    id: '6',
-    userName: 'Messi',
-    postTime: '1 hours ago',
-    post: 'Hey there, this is my test for a post of my social app in React Native.',
-    postImg: require('../../../assets/couples.png'),
-    liked: true,
-    likes: '1',
-    comments: '0',
-  },
-  {
-    id: '7',
-    userName: 'Ronaldo',
-    postTime: '2 hours ago',
-    post: 'Hey there, this is my test for a post of my social app in React Native.',
-    postImg: require('../../../assets/beach.png'),
-    likes: '8',
-    comments: '0',
+export default function HomeScreen({navigation}) {
+  const {user, logout} = useContext(AuthContext);
+  const [users, setUsers] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const getUsers = async () => {
+    const querySanp = await firestore()
+      .collection('users')
+      .where('uid', '!=', user.uid)
+      .get();
+    const allusers = querySanp.docs.map(docSnap => docSnap.data());
+    setUsers(allusers);
+  };
+
+  useEffect(() => {
+    getUsers();
+     if(loading){
+    setLoading(false);
   }
-];
 
-const renderItem = ({item}) => (
-  <View style={styles.main_view}>
-    <Image
-      source={item.postImg}
-      style={styles.image}
-      resizeMode={'contain'}></Image>
-    <Text style={styles.user}>{item.userName}</Text>
-  </View>
-);
+  },
+  
+  []);
 
-const Chat = ({navigation}) => {
+  let person = user;
+  console.log(person);
+
+  const RenderCard = ({item}) => {
+    return (
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate('Message', {
+            name: item.DisplayName,
+            uid: item.uid,
+            status:
+              typeof item.status == 'string'
+                ? item.status
+                : item.status.toDate().toString(),
+          })
+        }>
+        <View style={styles.mycard}>
+          <View style={styles.image}>
+            <Text style={styles.mail}>{item.DisplayName.charAt(0).toUpperCase()}</Text>
+          </View>
+
+          <View style={styles.user}>
+            <Text style={styles.text}>{item.DisplayName}</Text>
+            <Text style={styles.mailtext}>{item.email}</Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
   return (
-    <View style={styles.FlatList}>
+    <View style={styles.container}>
+      {loading?
+<View style={{height:350,alignItems:"center",justifyContent:'flex-end'}}>
+  <ActivityIndicator
+  animating={loading}
+  size='large'
+  color='#000'
+  />
+  </View>
+     :
+     <>
+     <View style={styles.header_view}>
+        <TouchableOpacity>
+          <Icons
+            name="arrowleft"
+            size={30}
+            color="black"
+            style={styles.icon}
+            onPress={() => navigation.goBack()}
+          />
+        </TouchableOpacity>
+        <Text style={styles.head}>Chat</Text>
+      </View>
       <FlatList
-        data={DATA}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
+        data={users}
+        renderItem={({item}) => {
+          return <RenderCard item={item} />;
+        }}
+        keyExtractor={item => item.uid}
+        style={styles.flatlist}
       />
+      </>
+      }
     </View>
   );
-};
+}
 
-export default Chat;
-
-const styles = ScaledSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  text: {
+    fontSize: 18,
+    marginLeft: 15,
+    color: 'black',
+  },
+  mycard: {
+    flexDirection: 'row',
+    margin: 10,
+    borderBottomWidth:1,
+    paddingVertical:10,
+    paddingLeft:10,
+    borderBottomColor:'lightgrey',
+    flex:1
+  },
   header_view: {
-    flex: 0.2,
+    flexDirection: 'row',
+    height:50,
+    backgroundColor:COLORS.primaryColor
   },
   head: {
-    ...FONTS.h1,
+    fontSize:22,
     color: COLORS.textColor,
     fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  user: {
-    fontSize: 20,
-    marginLeft: 30,
-    color: COLORS.textColor,
-    marginTop: 5,
+    paddingLeft: 115,
+    top:10
   },
   image: {
-    height:50,
-    width: 50,
-    alignSelf: 'center',
-    borderRadius:50
+    backgroundColor: COLORS.secondaryColor,
+    flex:0.15,
+    borderRadius: 50,
   },
-  main_view: {
-    backgroundColor: COLORS.primaryColor,
-    margin: 20,
-    borderRadius: 20,
-    flexDirection:"row"
+  mail: {
+    fontSize:30,
+    fontWeight: 'bold',
+    color: 'white',
+    textAlign:"center"
   },
   icon: {
-    flexDirection: 'row',
-    marginLeft: 30,
+  paddingLeft:20,
+  top:10
   },
-  FlatList:{
-
+  user:{
+    flex:0.85
+  },
+  mailtext:{
+    fontSize: 15,
+    marginLeft: 15,
+  
+  },
+  flatlist:{
+    marginBottom:50
   }
 });

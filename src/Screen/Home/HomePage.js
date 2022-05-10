@@ -1,71 +1,19 @@
-import React, {useState, useEffect} from 'react';
-import {View, FlatList, Image, Text, Alert} from 'react-native';
+import React, {useState, useEffect, useContext} from 'react';
+import {View, FlatList, Image, Text, Alert, ActivityIndicator,TouchableOpacity} from 'react-native';
 import {ScaledSheet} from 'react-native-size-matters';
 import {COLORS, FONTS, strings} from '../../constants';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 import PostCard from './PostCard';
+import {AuthContext} from '../../Router/AuthProvider';
+import Icons from 'react-native-vector-icons/Entypo';
 
-const DATA = [
-  {
-    id: '1',
-    userName: 'Jenny Doe',
-    postTime: '4 mins ago',
-    post: 'Hey there, this is my test for a post of my social app in React Native.',
-    postImg: require('../../../assets/couple.png'),
-    liked: true,
-    likes: '14',
-    comments: '5',
-  },
-  {
-    id: '2',
-    userName: 'John Doe',
-    postTime: '2 hours ago',
-    post: 'Hey there, this is my test for a post of my social app in React Native.',
-    postImg: require('../../../assets/beach.png'),
-    likes: '8',
-    comments: '0',
-  },
-  {
-    id: '3',
-    userName: 'Ken William',
-    postTime: '1 hours ago',
-    post: 'Hey there, this is my test for a post of my social app in React Native.',
-    postImg: require('../../../assets/couples.png'),
-    liked: true,
-    likes: '1',
-    comments: '0',
-  },
-];
 
-const renderItem = ({item}) => (
-  <View style={styles.main_view}>
-    <Text style={styles.user}>{{uri: userName}}</Text>
-    <Image
-      source={{uri: postImg}}
-      style={styles.image}
-      resizeMode={'contain'}></Image>
-    <View style={styles.icon}>
-      <Icon
-        name="heart-o"
-        size={30}
-        color="black"
-        style={{height: 50, width: 50}}
-      />
-      <Icon
-        name="comment-o"
-        size={30}
-        color="black"
-        style={{height: 50, width: 50}}
-      />
-    </View>
-  </View>
-);
-const Feed = () => {
+const Feed = ({navigation}) => {
+  const {user, logout} = useContext(AuthContext);
   const [posts, setPosts] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [deleted, setDeleted] = useState(false);
 
   const fetchPosts = async () => {
@@ -79,14 +27,12 @@ const Feed = () => {
           // console.log('Total Posts: ', querySnapshot.size);
 
           querySnapshot.forEach(doc => {
-            const {userId, post, postImg, postTime, likes, comments} =
+            const {userId, post, postImg, postTime, likes, comments, user} =
               doc.data();
             list.push({
               id: doc.id,
               userId,
-              userName: 'Test Name',
-              userImg:
-                'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg',
+              user,
               postTime: postTime,
               post,
               postImg,
@@ -108,9 +54,20 @@ const Feed = () => {
     }
   };
 
+
+
   useEffect(() => {
-    fetchPosts();
+    const unsubscribe = navigation.addListener('focus', () => {
+      // The screen is focused
+      // Call any action
+      fetchPosts();
+    });
+    // Return the function to unsubscribe from the event so it gets removed on unmount
+    return unsubscribe;
   }, []);
+
+
+
 
   useEffect(() => {
     fetchPosts();
@@ -180,7 +137,7 @@ const Feed = () => {
         );
         setDeleted(true);
       })
-      .catch(e => console.log('Error deleting posst.', e));
+      .catch(e => console.log('Error deleting post.', e));
   };
 
   const ListHeader = () => {
@@ -188,7 +145,30 @@ const Feed = () => {
   };
 
   return (
+    
     <SafeAreaView style={styles.container}>
+      {loading?
+<View style={{height:350,alignItems:"center",justifyContent:'flex-end'}}>
+  <ActivityIndicator
+  animating={loading}
+  size='large'
+  color='#000'
+  />
+</View>:
+<View>
+  <View style={styles.header_view}>
+  <TouchableOpacity>
+    <Icons
+      name="menu"
+      size={30}
+      color="black"
+      style={styles.icons}
+      onPress={() => navigation.openDrawer()}
+    />
+  </TouchableOpacity>
+  <Text style={styles.head}>Home</Text>
+</View>
+      
       <View>
         <FlatList
           data={posts}
@@ -201,44 +181,36 @@ const Feed = () => {
           showsVerticalScrollIndicator={false}
         />
       </View>
+      </View>
+}
     </SafeAreaView>
   );
 };
-
 export default Feed;
 
 const styles = ScaledSheet.create({
   container: {
     flex: 1,
+    backgroundColor:COLORS.primaryColor,
   },
   header_view: {
-    flex: 0.2,
+  
+    flexDirection: 'row',
+    paddingLeft:5,
+    backgroundColor:COLORS.primaryColor,
+    height:'50@vs'
   },
   head: {
-    ...FONTS.h1,
+    fontSize:22,
     color: COLORS.textColor,
     fontWeight: 'bold',
-    textAlign: 'center',
+    alignSelf:"center",
+  top:5,
+    paddingLeft:105,
+    
   },
-  user: {
-    ...FONTS.body4,
-    marginLeft:'30@vs',
-    color: COLORS.textColor,
-    marginTop: 5,
-  },
-  image: {
-    height:'200@vs',
-    width:'400@s',
-    marginBottom:'50@s',
-    alignSelf: 'center',
-  },
-  main_view: {
-    backgroundColor: COLORS.primaryColor,
-    margin:'20@msr',
-    borderRadius:'20@msr',
-  },
-  icon: {
-    flexDirection: 'row',
-    marginLeft:'30@s',
-  },
+  icons: {
+    paddingLeft:20,
+    top:15
+    },
 });

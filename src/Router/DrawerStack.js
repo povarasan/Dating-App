@@ -12,69 +12,70 @@ import {
 import {ScaledSheet} from 'react-native-size-matters';
 import {COLORS, FONTS, strings} from '../constants';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import auth from '@react-native-firebase/auth';
 
 import {AuthContext} from './AuthProvider';
-import { Button } from 'react-native-paper';
+import {Button} from 'react-native-paper';
 
-const FlatListData = [
-  {
-    id: 1,
-    title: 'Feed',
-  },
-  {
-    id: 2,
-    title: 'Post',
-  },
-];
+const DrawerStack = ({navigation}) => {
+  const {user, logout} = useContext(AuthContext);
 
-const DrawerStack = props => {
-  const [logoutAction, setLogoutAction] = useState(false);
-  const clickAction = async item => {
-    props.navigation.closeDrawer();
+  const Signout = () => {
+    auth().signOut().then(()=>{
+      console.log('Signout')
+  
+    })
+   
   };
 
-   const {user, logout} = useContext(AuthContext);
-
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: COLORS.secondaryColor}}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.profileView}>
           <View style={styles.imgView}>
-            {/* <Image style={styles.imgStyle} source={Images.profile} resizeMode={'cover'}/> */}
             <View>
-              <Text
-                numberOfLines={1}
-                style={[styles.nameTitle, {...FONTS.h3}]}>
-                {'Dating App'}
-              </Text>
-
+              <Text style={styles.title}>Dating App!</Text>
             </View>
           </View>
-          <View>
-            {FlatListData.map((item, index) => {
-              return (
-                <TouchableOpacity
-                  key={item.id}
-                  activeOpacity={0.3}
-                  style={styles.flatListParentView}
-                  onPress={() => clickAction(item)}>
-                  <View style={{flex: 0.8, justifyContent: 'center'}}>
-                    <Text numberOfLines={1} style={styles.tabTitle}>
-                      {item.title}
-                    </Text>
-                  </View>
-                  
-                </TouchableOpacity>
-              );
-            })}
+
+          <View style={{marginTop: 50}}>
+            <TouchableOpacity
+              activeOpacity={0.3}
+              style={styles.flatListParentView}
+              onPress={() => navigation.navigate('HomePage')}>
+              <Text numberOfLines={1} style={styles.tabTitle}>
+                Home
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              activeOpacity={0.3}
+              style={styles.flatListParentView}
+              onPress={() => navigation.navigate('Post')}>
+              <Text numberOfLines={1} style={styles.tabTitle}>
+                Post
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              activeOpacity={0.3}
+              style={styles.flatListParentView}
+              onPress={() => navigation.navigate('Chat')}>
+              <Text numberOfLines={1} style={styles.tabTitle}>
+                Chat
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.3}
+              style={styles.flatListParentView}
+              onPress={() => logout()}>
+              <Text numberOfLines={1} style={styles.tabTitle}>
+                Logout
+              </Text>
+            </TouchableOpacity>
           </View>
-          <Button  style={styles.logout}onPress={() => logout()} >
-            Logout</Button>
         </View>
       </ScrollView>
-     
-      
     </SafeAreaView>
   );
 };
@@ -86,36 +87,42 @@ const styles = ScaledSheet.create({
     flexDirection: 'row',
   },
   title: {
-    ...FONTS.h1,
-    marginStart: '56@s',
-    color: COLORS.textColor,
+    fontSize: 30,
+    fontWeight: 'bold',
+    paddingLeft: 35,
+    color: COLORS.primaryColor,
   },
   profileView: {
     paddingHorizontal: '15@s',
   },
   imgView: {
-    borderBottomWidth: 0.6,
-    borderBottomColor: COLORS.secondaryColor,
+    borderBottomWidth: 1,
+    borderBottomColor: 'white',
     paddingVertical: '20@vs',
     flexDirection: 'row',
   },
   nameTitle: {
     color: COLORS.textColor,
-    fontWeight:"bold",
+    fontWeight: 'bold',
     marginTop: '10@vs',
   },
   flatListParentView: {
     flexDirection: 'row',
     paddingVertical: '15@vs',
-    borderBottomWidth: 0.6,
-    borderBottomColor: COLORS.textColor,
+    alignSelf: 'center',
+    borderBottomWidth: 0.8,
+    borderBottomColor: 'white',
+    width: '90%',
   },
   tabTitle: {
     ...FONTS.body2,
-    color: COLORS.whiteColor,
+    color: 'white',
   },
-  logout:{
-    color:"black"
-  }
+  logout: {
+    padding: 10,
+    marginTop: 50,
+    backgroundColor: 'grey',
+    borderRadius: 10,
+  },
 });
 export default DrawerStack;

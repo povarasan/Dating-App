@@ -5,6 +5,7 @@ import {ScaledSheet} from 'react-native-size-matters';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import {COLORS, FONTS, strings} from '../../constants';
 
+
 const IntroSlider = ({navigation}) => {
   const RenderItem = ({item}) => {
     return (
@@ -64,8 +65,9 @@ const styles = ScaledSheet.create({
   content: {
     backgroundColor: COLORS.primaryColor,
     alignSelf: 'center',
-    borderRadius: 20,
-    margin:20
+    borderRadius:'20@msr',
+    margin:'20@msr',
+    marginTop:'60@msr'
   },
   titleStyle: {
     fontSize: 18,
@@ -107,14 +109,14 @@ const styles = ScaledSheet.create({
     fontWeight: 'bold',
   },
   button: {
-    width: '150@s',
+    width: '70@s',
     height: '40@vs',
     borderRadius: '5@msr',
     backgroundColor: '#0095C6',
     justifyContent: 'center',
     alignItems: 'center',
     bottom: '30@vs',
-    right: '90@s',
+    right: '126@s',
     position: 'absolute',
   }
 });
