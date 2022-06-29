@@ -5,6 +5,7 @@ import {ScaledSheet} from 'react-native-size-matters';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import HomePage from '../Screen/Home/HomePage';
 import Post from '../Screen/Post/Post';
+import Next from '../Screen/Home/Next'
 import {COLORS, FONTS, SIZES} from '../constants';
 import DrawerStack from './DrawerStack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -23,7 +24,7 @@ const PostStack = createNativeStackNavigator();
 const ChatStack = createNativeStackNavigator();
 const MainStack = createNativeStackNavigator();
 
-export const RootStack = ({}) => {
+export const RootStack = ({navigation}) => {
   return (
     <Tab.Navigator
       initialRouteName="HomeScreen"
@@ -105,17 +106,14 @@ const HomeScreen = ({navigation}) => {
   return (
     <HomeStack.Navigator>
       <HomeStack.Screen
-        name={'Home'}
+        name={'HomePage'}
         component={HomePage}
         options={{
-          headerShown: false,
-          // header: () => (
-          //   <CommonHeader
-          //     type={1}
-          //     onClick={() => navigation.openDrawer()}
+          headerShown: true,
 
-          //   />
-          // ),
+          header: () => (
+            <CommonHeader type={1} onClick={() => navigation.openDrawer()} />
+          ),
         }}
       />
     </HomeStack.Navigator>
@@ -129,7 +127,10 @@ const PostStackScreen = ({navigation}) => {
         name={'Post'}
         component={Post}
         options={{
-          headerShown: false,
+          headerShown: true,
+          header: () => (
+            <CommonHeader type={2} onClick={() => navigation.goBack()} />
+          ),
         }}
       />
     </PostStack.Navigator>
@@ -143,7 +144,10 @@ const ChatStackScreen = ({navigation}) => {
         name={'Chat'}
         component={Chat}
         options={{
-          headerShown: false,
+          headerShown: true,
+          header: () => (
+            <CommonHeader type={3} onClick={() => navigation.goBack()} />
+          ),
         }}
       />
     </ChatStack.Navigator>
@@ -168,19 +172,42 @@ const MainScreens = ({navigation}) => {
           headerShown: false,
         }}
       />
-
       <MainStack.Screen
         name={'HomePage'}
         component={HomePage}
         options={{
-          headerShown: false,
+          headerShown: true,
+          header: () => (
+            <CommonHeader type={1} onClick={() => navigation.openDrawer()} />
+          ),
         }}
       />
       <MainStack.Screen
         name={'Post'}
         component={Post}
         options={{
-          headerShown: false,
+          headerShown: true,
+          header: () => (
+            <CommonHeader type={2} onClick={() => navigation.goBack()} />
+          ),
+        }}
+      />
+      <MainStack.Screen
+        name={'Chat'}
+        component={Chat}
+        options={{
+          headerShown: true,
+          header: () => (
+            <CommonHeader type={3} onClick={() => navigation.navigate("HomePage")} />
+          ),
+        }}
+      />
+
+      <MainStack.Screen
+        name={'Next'}
+        component={Next}
+        options={{
+          headerShown:false,
         }}
       />
     </MainStack.Navigator>

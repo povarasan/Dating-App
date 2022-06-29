@@ -50,7 +50,8 @@ const IntroSlider = ({navigation}) => {
       showSkipButton={false}
       showNextButton={false}
       dotStyle={{backgroundColor: 'white', marginBottom: 250}}
-      activeDotStyle={{backgroundColor: 'white', marginBottom: 250}}
+      activeDotStyle={{backgroundColor: 'white', marginBottom: 250,width:20}}
+    
     />
   );
 };

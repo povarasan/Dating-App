@@ -29,6 +29,9 @@ const Login = ({navigation}) => {
 
   const input1 = useRef();
   const input2 = useRef();
+  
+  const [focus,setFocus] = useState(false);
+  const customStyle = focus ? styles.textInputFocus : styles.textinput;
 
   const onClick = () => {
     if (mail === '') {
@@ -38,7 +41,7 @@ const Login = ({navigation}) => {
       setError2(true);
       setErrorText2('Enter password');
     } else {
-      setLoading(true);
+      //  setLoading(true);
       login(mail, pass);
     }
   };
@@ -67,6 +70,7 @@ const Login = ({navigation}) => {
               mode="outlined"
               label="Email"
               placeholder="Type something"
+              onFocus={()=> setFocus(true)}
               onChangeText={text => {
                 setMail(text);
                 setErrorText1(false);
@@ -87,6 +91,7 @@ const Login = ({navigation}) => {
               style={styles.textinput}
               label="Password"
               mode="outlined"
+              onFocus={()=> setFocus(true)}
               right={
                 <TextInput.Icon
                   name={passwordVisible ? 'eye' : 'eye-off'}
@@ -152,6 +157,9 @@ const styles = ScaledSheet.create({
     width: '85%',
     alignSelf: 'center',
     marginTop: 15,
+  },
+  textInputFocus:{
+    borderColor:"orange"
   },
   button: {
     alignSelf: 'center',

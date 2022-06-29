@@ -10,7 +10,7 @@ import React, {useState, useContext, useEffect} from 'react';
 import Icons from 'react-native-vector-icons/AntDesign';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {ScaledSheet} from 'react-native-size-matters';
-import {COLORS, FONTS, strings} from '../../constants';
+import {COLORS,SIZES, FONTS, strings} from '../../constants';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Button from '../../component/Button';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -157,7 +157,7 @@ const Post = ({item, navigation}) => {
           callbackNode={fall}
           enabledGestureInteraction={true}
         />
-        <View style={styles.header_view}>
+        {/* <View style={styles.header_view}>
           <TouchableOpacity>
             <Icons
               name="arrowleft"
@@ -168,22 +168,23 @@ const Post = ({item, navigation}) => {
             />
           </TouchableOpacity>
           <Text style={styles.head}>Create Post</Text>
-        </View>
+        </View> */}
 
         <View style={styles.main_view}>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => this.bs.current.snapTo(0)}>
+            onPress={() => bs.current.snapTo(0)}>
             <Icon name="image" size={25} color="white" style={styles.icon} />
             <Text style={styles.photo}>Photo</Text>
           </TouchableOpacity>
+         
 
           <Animated.View
             style={{
-              margin: 20,
+             
               opacity: Animated.add(0.1, Animated.multiply(fall, 1.0)),
             }}>
-            <View style={{alignItems: 'center', marginBottom: 55}}>
+            <View style={{alignItems: 'center', marginBottom: 95}}>
               <View
                 style={{
                   height: 350,
@@ -197,7 +198,7 @@ const Post = ({item, navigation}) => {
                   source={{
                     uri: image,
                   }}
-                  style={{height: 200, width: 200}}
+                  style={{height:300, width: 270}}
                   imageStyle={{borderRadius: 15}}>
                   <View
                     style={{
@@ -209,21 +210,22 @@ const Post = ({item, navigation}) => {
               </View>
             </View>
           </Animated.View>
-
           <TextInput
             placeholder="What's on your mind?"
-            multiline
-            numberOfLines={3}
+            numberOfLines={1}
             value={post}
             onChangeText={content => setPost(content)}
             style={styles.poster}
           />
+         
           {loading ? (
             <View
               style={{
-                alignItems: 'center',
-                justifyContent: 'flex-end',
-                bottom: 25,
+              alignSelf:"center",
+               bottom:50,
+               height:30,
+               width:50,
+               textAlign:"center"
               }}>
               <ActivityIndicator size="large" color="#0000ff" />
             </View>
@@ -246,8 +248,9 @@ export default Post;
 const styles = ScaledSheet.create({
   container: {
     flex: 1,
+    backgroundColor: COLORS.primaryColor,
   },
-  header_view: {
+    header_view: {
     flex: 0.2,
     flexDirection: 'row',
     // marginTop: '15@vs',
@@ -255,15 +258,15 @@ const styles = ScaledSheet.create({
     backgroundColor: COLORS.primaryColor,
     height: '50@vs',
   },
-  head: {
-    fontSize:22,
-    color: COLORS.textColor,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    flex: 0.8,
-    paddingLeft: 10,
-    top: 10,
-  },
+  // head: {
+  //   fontSize:22,
+  //   color: COLORS.textColor,
+  //   fontWeight: 'bold',
+  //   textAlign: 'center',
+  //   flex: 0.8,
+  //   paddingLeft: 10,
+  //   top: 10,
+  // },
   main_view: {
     flex: 0.8,
     backgroundColor: COLORS.primaryColor,
@@ -279,20 +282,21 @@ const styles = ScaledSheet.create({
   button: {
     flexDirection: 'row',
     backgroundColor: COLORS.secondaryColor,
-    width: 130,
-    height: 40,
+    width: SIZES.width /3,
+    height: 45,
     borderRadius: 50,
     marginTop: 25,
-    marginLeft: 20,
+    // marginLeft: 20,
   },
   photo: {
     ...FONTS.h3,
     paddingLeft: 10,
     color: COLORS.primaryColor,
+    paddingTop:5
   },
   icon: {
     paddingLeft: 15,
-    marginTop: 5,
+    marginTop:10,
   },
   caption: {
     paddingLeft: 25,
@@ -300,17 +304,16 @@ const styles = ScaledSheet.create({
   },
   post: {
     borderRadius: '50@msr',
-    backgroundColor: '#0095C6',
+    backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
     bottom: '30@vs',
-    right: '90@s',
-    position: 'absolute',
+    // right: '90@s',  
   },
   panelButton: {
     padding: 13,
     borderRadius: 10,
-    backgroundColor: '#FF6347',
+    backgroundColor:COLORS.secondaryColor,
     alignItems: 'center',
     marginVertical: 7,
   },
@@ -318,14 +321,25 @@ const styles = ScaledSheet.create({
     padding: 20,
     backgroundColor: '#FFFFFF',
     paddingTop: 60,
+    margin:30,
+    borderRadius:'50@msr'
+  },
+  panelTitle:{
+    fontSize:18,
+    fontWeight:"bold"
   },
   poster: {
     position: 'absolute',
     bottom: '75@vs',
-    right: '90@s',
+    alignSelf:"center",
+   height:50,
+   width:'75%',
+   paddingLeft:55,
   },
   icons: {
     paddingLeft: 20,
     top: 10,
   },
 });
+
+

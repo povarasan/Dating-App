@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">Dating</string>
+    <string name="app_name">Zappy</string>
     <string moduleConfig="true" name="CodePushDeploymentKey">7wtkSshLaQXfIgE7a0PwhoOtpiDNmLWJ7r5SZ</string>
 </resources>

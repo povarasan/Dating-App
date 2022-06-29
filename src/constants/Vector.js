@@ -16,7 +16,7 @@ import EyeIcon from "react-native-vector-icons/Ionicons";
 import EyeOffIcon from "react-native-vector-icons/Ionicons";
 
 export const MenuImage = (
-  <MenuIcon name={"ios-menu-sharp"} color={COLORS.textColor} size={35}  />
+  <MenuIcon name={"ios-menu-sharp"} color={COLORS.textColor} size={25}  />
 );
 
 const NotificationImage = (
@@ -32,11 +32,11 @@ const Back = (
 );
 
 const BackArrow = (
-  <BackArrowIcon name={"arrowleft"} color={COLORS.primaryColor} size={25} />
+  <BackArrowIcon name={"arrowleft"} color={COLORS.primaryColor} size={22} />
 );
 
 const HeaderBackArrow = (
-  <HeaderBackArrowIcon name={"arrowleft"} color={COLORS.whiteColor} size={25} />
+  <HeaderBackArrowIcon name={"arrowleft"} color={COLORS.textColor} size={25} />
 );
 
 const DrawerRight = (

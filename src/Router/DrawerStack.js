@@ -13,19 +13,19 @@ import {ScaledSheet} from 'react-native-size-matters';
 import {COLORS, FONTS, strings} from '../constants';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import auth from '@react-native-firebase/auth';
-
 import {AuthContext} from './AuthProvider';
 import {Button} from 'react-native-paper';
-
+import {Fonts} from '../utils/fontfamily';
+import Icons from 'react-native-vector-icons/Entypo';
 const DrawerStack = ({navigation}) => {
   const {user, logout} = useContext(AuthContext);
 
   const Signout = () => {
-    auth().signOut().then(()=>{
-      console.log('Signout')
-  
-    })
-   
+    auth()
+      .signOut()
+      .then(() => {
+        console.log('Signout');
+      });
   };
 
   return (
@@ -33,46 +33,78 @@ const DrawerStack = ({navigation}) => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.profileView}>
           <View style={styles.imgView}>
-            <View>
-              <Text style={styles.title}>Dating App!</Text>
-            </View>
+            <Image
+              source={require('../../assets/logo.png')}
+              style={styles.logo}></Image>
           </View>
-
           <View style={{marginTop: 50}}>
-            <TouchableOpacity
-              activeOpacity={0.3}
-              style={styles.flatListParentView}
-              onPress={() => navigation.navigate('HomePage')}>
-              <Text numberOfLines={1} style={styles.tabTitle}>
-                Home
-              </Text>
-            </TouchableOpacity>
+            <View style={styles.segment}>
+              <Icon
+                name="home"
+                size={30}
+                color={'white'}
+                style={{height: 50, width: 50,paddingTop:15}}
+              />
 
-            <TouchableOpacity
-              activeOpacity={0.3}
-              style={styles.flatListParentView}
-              onPress={() => navigation.navigate('Post')}>
-              <Text numberOfLines={1} style={styles.tabTitle}>
-                Post
-              </Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={0.3}
+                style={styles.flatListParentView}
+                onPress={() => navigation.navigate('HomePage')}>
+                <Text numberOfLines={1} style={styles.tabTitle}>
+                  Home
+                </Text>
+              </TouchableOpacity>
+            </View>
 
-            <TouchableOpacity
-              activeOpacity={0.3}
-              style={styles.flatListParentView}
-              onPress={() => navigation.navigate('Chat')}>
-              <Text numberOfLines={1} style={styles.tabTitle}>
-                Chat
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.3}
-              style={styles.flatListParentView}
-              onPress={() => logout()}>
-              <Text numberOfLines={1} style={styles.tabTitle}>
-                Logout
-              </Text>
-            </TouchableOpacity>
+            <View style={styles.segment}>
+            <Icon
+                name="upload"
+                size={30}
+                color={'white'}
+                style={{height: 50, width: 50,paddingTop:15}}
+              />
+              <TouchableOpacity
+                activeOpacity={0.3}
+                style={styles.flatListParentView}
+                onPress={() => navigation.navigate('Post')}>
+                <Text numberOfLines={1} style={styles.tabTitle}>
+                  Post
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.segment}>
+            <Icons
+                name="chat"
+                size={30}
+                color={'white'}
+                style={{height: 50, width: 50,paddingTop:15}}
+              />
+              <TouchableOpacity
+                activeOpacity={0.3}
+                style={styles.flatListParentView}
+                onPress={() => navigation.navigate('Chat')}>
+                <Text numberOfLines={1} style={styles.tabTitle}>
+                  Chat
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.segment}>
+            <Icon
+                name="sign-out"
+                size={30}
+                color={'white'}
+                style={{height: 50, width: 50,paddingTop:15}}
+              />
+              <TouchableOpacity
+                activeOpacity={0.3}
+                style={styles.flatListParentView}
+                onPress={() => logout()}>
+                <Text numberOfLines={1} style={styles.tabTitle}>
+                  Logout
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </ScrollView>
@@ -87,9 +119,9 @@ const styles = ScaledSheet.create({
     flexDirection: 'row',
   },
   title: {
-    fontSize: 30,
+    fontSize: 25,
     fontWeight: 'bold',
-    paddingLeft: 35,
+    paddingLeft: 40,
     color: COLORS.primaryColor,
   },
   profileView: {
@@ -99,7 +131,6 @@ const styles = ScaledSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: 'white',
     paddingVertical: '20@vs',
-    flexDirection: 'row',
   },
   nameTitle: {
     color: COLORS.textColor,
@@ -110,9 +141,7 @@ const styles = ScaledSheet.create({
     flexDirection: 'row',
     paddingVertical: '15@vs',
     alignSelf: 'center',
-    borderBottomWidth: 0.8,
-    borderBottomColor: 'white',
-    width: '90%',
+   
   },
   tabTitle: {
     ...FONTS.body2,
@@ -124,5 +153,17 @@ const styles = ScaledSheet.create({
     backgroundColor: 'grey',
     borderRadius: 10,
   },
+  logo: {
+    alignSelf: 'center',
+
+  },
+  segment:{
+    flexDirection:"row",
+    alignSelf:"center",
+    borderBottomWidth: 0.8,
+    borderBottomColor: 'white',
+    width: '90%',
+    marginTop:15
+  }
 });
 export default DrawerStack;
